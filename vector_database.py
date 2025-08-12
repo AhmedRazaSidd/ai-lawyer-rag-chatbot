@@ -18,6 +18,30 @@ def load_pdf(file_path):
 
 
 
-# file_path = "pdfs/universal_human_rights.pdf"
-# documents=load_pdf(file_path) 
+file_path = "pdfs/universal_human_rights.pdf"
+documents=load_pdf(file_path) 
 # print(len(documents))
+
+#Step2: Create Chunks
+def create_chunks(documents):
+    text_splitter=RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200,
+        add_start_index=True
+    )
+    text_chunks=text_splitter.split_documents(documents)
+    return text_chunks
+
+text_chunks=create_chunks(documents)
+# print("Chunks count:",len(text_chunks))
+
+#Step3: Setup Embeddings Model (Use DeepSeek R1 with ollama)
+ollama_model_name="deepseek-r1:1.5b"
+def get_embedding_model(ollama_model_name):
+    embeddings = OllamaEmbeddings(model=ollama_model_name)
+    return embeddings
+
+#Step4: Index Documents **Store embeddings in FAISS (vector store)
+FAISS_DB_PATH="vectorstore/db_faiss"
+faiss_db=FAISS.from_documents(text_chunks,get_embedding_model(ollama_model_name))
+faiss_db.save_local(FAISS_DB_PATH)
