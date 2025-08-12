@@ -12,5 +12,6 @@ dependencies = [
     "langchain-groq>=0.3.7",
     "langchain-ollama>=0.3.6",
     "pdfplumber>=0.11.7",
+    "python-dotenv>=1.1.1",
     "streamlit>=1.48.0",
 ]
