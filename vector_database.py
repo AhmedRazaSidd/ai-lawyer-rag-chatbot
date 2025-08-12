@@ -14,8 +14,10 @@ def upload_pdf(file):
 def load_pdf(file_path):
     loader=PDFPlumberLoader(file_path)
     documents = loader.load()
-    return documents
+    return documents 
+
+
 
 # file_path = "pdfs/universal_human_rights.pdf"
-# documents=load_pdf(file_path)
+# documents=load_pdf(file_path) 
 # print(len(documents))
